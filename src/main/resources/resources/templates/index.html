@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista Cărților</title>
+</head>
+<body>
+<h1>Lista Cărților</h1>
+<div th:if="${message}">
+    <p th:text="${message}"></p>
+</div>
+
+<form action="/filtrare" method="post">
+    <label for="autor">Filtrează după autor: </label>
+    <input type="text" name="autor" id="autor"/>
+    <button type="submit">Filtrare</button>
+</form>
+
+<table>
+    <thead>
+    <tr>
+        <th>ISBN</th>
+        <th>Titlu</th>
+        <th>Autor</th>
+        <th>Acțiuni</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="carte : ${carti}">
+        <td th:text="${carte.isbn}"></td>
+        <td th:text="${carte.titlu}"></td>
+        <td th:text="${carte.autor}"></td>
+        <td>
+            <!-- Operatiuni -->
+            <form action="/modifica/{isbn}" method="post">
+                <button type="submit">Modifică</button>
+            </form>
+            <form action="/sterge/{isbn}" method="post">
+                <button type="submit">Șterge</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Formularele pentru adăugare -->
+<form action="/adauga" method="post">
+    <input type="text" name="isbn" placeholder="ISBN"/>
+    <input type="text" name="titlu" placeholder="Titlu"/>
+    <input type="text" name="autor" placeholder="Autor"/>
+    <button type="submit">Adaugă Carte</button>
+</form>
+</body>
+</html>
